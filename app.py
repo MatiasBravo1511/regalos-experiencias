@@ -762,7 +762,8 @@ def confirmar_desde_correo(texto_email):
                 enviar_correos_de_agradecimiento(r["nombre"], r["correo"], r["mensaje"], r["experiencias"], total)
                 break
     else:
-        print("⚠️ No se encontró ningún regalo pendiente con ese monto.")
+        print(f"⚠️ No se encontró ningún regalo pendiente con ese monto. Monto detectado: ${monto}")
+        print(f"Totales pendientes: {[sum(exp['precio'] for exp in r['experiencias']) for r in regalos if not r.get('confirmado')]}")
 
 
 
@@ -958,7 +959,8 @@ Mati & Cote 💕
         server = smtplib.SMTP(EMAIL_HOST, EMAIL_PORT)
         server.starttls()
         server.login(EMAIL_USER, EMAIL_PASS)
-        server.sendmail(EMAIL_USER, EMAILS_DESTINO_NOVIOS, msg_novios.as_string())
+        for correo in EMAILS_DESTINO_NOVIOS:
+            server.sendmail(EMAIL_USER, correo, msg_novios.as_string())
         server.sendmail(EMAIL_USER, correo_usuario, msg_user.as_string())
         server.quit()
         print("📬 Correos enviados con éxito.")
@@ -972,8 +974,9 @@ if __name__ == '__main__':
     def iniciar_lector_correos():
         def bucle_verificacion():
             while True:
-                leer_emails_y_confirmar(confirmar_desde_correo)
-                time.sleep(20)  # cada 20 segundos
+                for _ in range(15):  # intenta durante 5 minutos (15*20s)
+                    leer_emails_y_confirmar(confirmar_desde_correo)
+                    time.sleep(20)
 
         hilo = threading.Thread(target=bucle_verificacion, daemon=True)
         hilo.start()

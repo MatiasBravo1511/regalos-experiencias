@@ -14,7 +14,7 @@
             <div class="texto-bienvenida">
                 <h1>¡Gracias por acompañarnos en este momento tan especial!</h1>
                 <p>Queremos compartir con ustedes experiencias inolvidables que formarán parte de nuestro inicio como familia. Si desean regalarnos una de ellas, lo recibiríamos con mucho cariño 💕</p>
-				<p>El proceso de compra consiste en seleccionar experiencias que se agregarán a un carrito de compras. Posteriormente, la página les solicitará su nombre y un mensajito que nos llegará por interno. Finalmente, podrán hacer el pago con la plataforma chilena de confianza Slach.</p>
+				<p>El proceso de compra consiste en seleccionar experiencias que se agregarán a un carrito de compras. Posteriormente, la página les solicitará su nombre, correo y un mensajito que nos llegará por interno. Finalmente, podrán hacer el pago con la plataforma chilena de confianza Slach.</p>
 				<p>Considerando que esta página esta creada por nosotros, ante cualquier inconveniente o duda, pueden contactarnos.</p>
 				<p>Con cariño, Mati & Cote.</p>
             </div>
@@ -32,14 +32,13 @@
 
 					{% if exp.regalado %}
 						<p style="color: crimson; font-weight: bold;">YA REGALADO</p>
-					{% else %}
+					{% endif %}
 					<form action="/agregar" method="post">
 						<input type="hidden" name="nombre_exp" value="{{ exp.nombre }}">
 						<input type="hidden" name="precio_exp" value="{{ exp.precio }}">
 						<input type="hidden" name="descripcion_exp" value="{{ exp.descripcion }}">
 						<button type="submit">Agregar al carrito</button>
 					</form>
-					{% endif %}
 				</div>
 			</div>
 			{% endfor %}

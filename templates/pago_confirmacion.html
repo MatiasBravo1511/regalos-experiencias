@@ -32,7 +32,12 @@
 <script>
     window.onload = function() {
         const monto = {{ total }};
-        window.open(`https://slach.cl/mati-cote-regalos/${monto}`, '_blank');
+        <script>
+			window.onload = function() {
+				const monto = {{ total }};
+				window.location.href = `https://slach.cl/mati-cote-regalos/${monto}`;
+			};
+		</script>
     };
 </script>
     <div class="container" style="text-align: center;">

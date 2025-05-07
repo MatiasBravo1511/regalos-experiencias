@@ -759,7 +759,7 @@ def confirmar_desde_correo(texto_email):
                 print(f"✅ Confirmado regalo por monto: ${monto:,} de {r['nombre']}")
 
                 # Enviar correo recién ahora
-                enviar_correo(r["nombre"], r["mensaje"], r["experiencias"], total)
+                enviar_correos_de_agradecimiento(r["nombre"], r["correo"], r["mensaje"], r["experiencias"], total)
                 break
     else:
         print("⚠️ No se encontró ningún regalo pendiente con ese monto.")
@@ -832,9 +832,11 @@ def pagar():
     total = sum(item['precio'] for item in carrito)
     nombre = request.form.get("nombre")
     mensaje = request.form.get("mensaje")
+    correo_usuario = request.form.get("correo")
 
     regalo = {
         "nombre": nombre,
+        "correo": correo_usuario,
         "experiencias": [item.copy() for item in carrito],
         "mensaje": mensaje,
         "fecha": datetime.now(),
@@ -846,7 +848,8 @@ def pagar():
     session['regalo_actual_id'] = regalo_id
     session['total_a_pagar'] = total
 
-    return redirect(url_for('pago_confirmacion'))
+    # Redirige a Slach directamente
+    return redirect(f"https://slach.cl/mati-cote-regalos/{total}")
 
 @app.route('/verificar_pago')
 def verificar_pago():
@@ -885,45 +888,83 @@ def pago_confirmacion():
     return render_template("pago_confirmacion.html", total=total, nombre=nombre)
 
 
-def enviar_correo(nombre, mensaje, experiencias, total):
+def enviar_correos_de_agradecimiento(nombre, correo_usuario, mensaje, experiencias, total):
     EMAIL_HOST = "smtp.gmail.com"
     EMAIL_PORT = 587
     EMAIL_USER = "maticoteregalos@gmail.com"
     EMAIL_PASS = "qlhx kwrt kwxx pgap"
-    EMAIL_TO = "mjbravo4@uc.cl"
 
-    # Construir el contenido del correo
-    subject = f"🎁 Nuevo regalo de {nombre}"
-    body = f"""
-Hola, recibiste un nuevo regalo:
+    EMAILS_DESTINO_NOVIOS = ["mjbravo4@uc.cl", "cote@ejemplo.com"]  # <- agrega el correo de tu novia real
+
+    # ---------- Correo para los novios ----------
+    subject_novios = f"🎁 Nuevo regalo de {nombre}"
+    body_novios = f"""Hola, recibiste un nuevo regalo:
 
 👤 Nombre: {nombre}
+📧 Correo: {correo_usuario}
 💬 Mensaje: {mensaje}
 
-🎉 Experiencias regaladas:
-"""
+🎉 Experiencias regaladas:"""
 
     for exp in experiencias:
-        body += f"- {exp['nombre']} (${exp['precio']:,})\n"
+        body_novios += f"\n- {exp['nombre']} (${exp['precio']:,})"
 
-    body += f"\n💰 Total: ${total:,} CLP\n\n¡Revisa Slach para confirmar el pago! 💚"
+    body_novios += f"\n\n💰 Total: ${total:,} CLP\n\n¡Revisa Slach para confirmar el pago! 💚"
 
-    # Crear el mensaje MIME
-    msg = MIMEMultipart()
-    msg["From"] = EMAIL_USER
-    msg["To"] = EMAIL_TO
-    msg["Subject"] = subject
-    msg.attach(MIMEText(body, "plain"))
+    msg_novios = MIMEMultipart()
+    msg_novios["From"] = EMAIL_USER
+    msg_novios["To"] = ", ".join(EMAILS_DESTINO_NOVIOS)
+    msg_novios["Subject"] = subject_novios
+    msg_novios.attach(MIMEText(body_novios, "plain"))
 
-    # Enviar el correo
+    # ---------- Correo de agradecimiento para quien regaló ----------
+    subject_user = "🎁 ¡Gracias por tu regalo!"
+    body_user = f"""Hola {nombre},
+
+Queremos agradecerte profundamente por tu regalo 💚
+
+🎉 Experiencias que nos regalaste:
+"""
+    for exp in experiencias:
+        body_user += f"- {exp['nombre']} (${exp['precio']:,})\n"
+
+    body_user += f"""
+💬 Tu mensaje:
+"{mensaje}"
+
+Gracias por formar parte de este momento tan especial.
+Con cariño,
+Mati & Cote 💕
+"""
+
+    msg_user = MIMEMultipart()
+    msg_user["From"] = EMAIL_USER
+    msg_user["To"] = correo_usuario
+    msg_user["Subject"] = subject_user
+    msg_user.attach(MIMEText(body_user, "plain"))
+
+    # Agregar imagen (opcional)
+    from email.mime.image import MIMEImage
+    try:
+        with open("static/img/nosotros_gracias.jpg", "rb") as f:
+            img = MIMEImage(f.read())
+            img.add_header('Content-ID', '<graciasimg>')
+            msg_user.attach(img)
+    except Exception as e:
+        print("No se pudo adjuntar imagen:", e)
+
+    # ---------- Enviar ambos correos ----------
     try:
         server = smtplib.SMTP(EMAIL_HOST, EMAIL_PORT)
         server.starttls()
         server.login(EMAIL_USER, EMAIL_PASS)
-        server.sendmail(EMAIL_USER, EMAIL_TO, msg.as_string())
+        server.sendmail(EMAIL_USER, EMAILS_DESTINO_NOVIOS, msg_novios.as_string())
+        server.sendmail(EMAIL_USER, correo_usuario, msg_user.as_string())
         server.quit()
+        print("📬 Correos enviados con éxito.")
     except Exception as e:
-        print("Error enviando correo:", e)
+        print("❌ Error al enviar correos:", e)
+
 
 if __name__ == '__main__':
     import threading
@@ -932,7 +973,7 @@ if __name__ == '__main__':
         def bucle_verificacion():
             while True:
                 leer_emails_y_confirmar(confirmar_desde_correo)
-                time.sleep(15)  # cada 20 segundos
+                time.sleep(7)  # cada 20 segundos
 
         hilo = threading.Thread(target=bucle_verificacion, daemon=True)
         hilo.start()

@@ -973,7 +973,7 @@ if __name__ == '__main__':
         def bucle_verificacion():
             while True:
                 leer_emails_y_confirmar(confirmar_desde_correo)
-                time.sleep(7)  # cada 20 segundos
+                time.sleep(20)  # cada 20 segundos
 
         hilo = threading.Thread(target=bucle_verificacion, daemon=True)
         hilo.start()

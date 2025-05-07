@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Regalos de Experiencias</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+
+        <!-- Bienvenida -->
+        <div class="bienvenida">
+            <img src="{{ url_for('static', filename='img/nosotros.jpg') }}" alt="Nosotros">
+            <div class="texto-bienvenida">
+                <h1>¡Gracias por acompañarnos en este momento tan especial!</h1>
+                <p>Queremos compartir con ustedes experiencias inolvidables que formarán parte de nuestro inicio como familia. Si desean regalarnos una de ellas, lo recibiríamos con mucho cariño 💕</p>
+				<p>El proceso de compra consiste en seleccionar experiencias que se agregarán a un carrito de compras. Posteriormente, la página les solicitará su nombre y un mensajito que nos llegará por interno. Finalmente, podrán hacer el pago con la plataforma chilena de confianza Slach.</p>
+				<p>Considerando que esta página esta creada por nosotros, ante cualquier inconveniente o duda, pueden contactarnos.</p>
+				<p>Con cariño, Mati & Cote.</p>
+            </div>
+        </div>
+
+        <label>Selecciona una o más experiencias:</label>
+		<div class="cards">
+			{% for exp in experiencias %}
+			<div class="card {% if exp.regalado %}regalado{% endif %}">
+				<img src="{{ url_for('static', filename=exp.imagen) }}" alt="{{ exp.nombre }}">
+				<div class="card-content">
+					<h3>{{ exp.nombre }}</h3>
+					<p class="precio">${{ "{:,}".format(exp.precio) }}</p>
+					<p class="descripcion">{{ exp.descripcion }}</p>
+
+					{% if exp.regalado %}
+						<p style="color: crimson; font-weight: bold;">YA REGALADO</p>
+					{% else %}
+					<form action="/agregar" method="post">
+						<input type="hidden" name="nombre_exp" value="{{ exp.nombre }}">
+						<input type="hidden" name="precio_exp" value="{{ exp.precio }}">
+						<input type="hidden" name="descripcion_exp" value="{{ exp.descripcion }}">
+						<button type="submit">Agregar al carrito</button>
+					</form>
+					{% endif %}
+				</div>
+			</div>
+			{% endfor %}
+		</div>
+
+		<div style="text-align:center; margin-top: 30px;">
+			<a href="{{ url_for('carrito') }}" style="text-decoration:none;">
+				<button type="button">Ver carrito</button>
+			</a>
+		</div>
+
+    </div>
+</body>
+</html>

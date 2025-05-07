@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Tu Carrito</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Tu Carrito de Regalos</h1>
+
+        {% if items %}
+        <ul>
+			{% for item in items %}
+			<li>
+				<strong>{{ item.nombre }}</strong> — ${{ "{:,}".format(item.precio) }}<br>
+				<em>{{ item.descripcion }}</em>
+				<form action="{{ url_for('eliminar_experiencia', indice=loop.index0) }}" method="post" style="display:inline;">
+					<button type="submit" style="margin-left: 10px; background-color: #B22222;">Eliminar</button>
+				</form>
+			</li>
+			<br>
+			{% endfor %}
+		</ul>
+
+
+        <p><strong>Total:</strong> ${{ "{:,}".format(total) }}</p>
+		<form action="{{ url_for('pagar') }}" method="post">
+			<label>Tu nombre:</label><br>
+			<input type="text" name="nombre" required><br><br>
+
+			<label>Mensaje:</label><br>
+			<textarea name="mensaje" rows="4" cols="50" required></textarea><br><br>
+
+			<button type="submit">Pagar con Slach 💳</button>
+		</form>
+
+        <p><em></p>
+        {% else %}
+        <p>No hay experiencias en tu carrito aún.</p>
+        {% endif %}
+
+        <a href="/">← Seguir viendo experiencias</a>
+    </div>
+</body>
+</html>

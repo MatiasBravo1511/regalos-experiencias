@@ -894,7 +894,7 @@ def enviar_correos_de_agradecimiento(nombre, correo_usuario, mensaje, experienci
     EMAIL_USER = "maticoteregalos@gmail.com"
     EMAIL_PASS = "qlhx kwrt kwxx pgap"
 
-    EMAILS_DESTINO_NOVIOS = ["mjbravo4@uc.cl", "cote@ejemplo.com"]  # <- agrega el correo de tu novia real
+    EMAILS_DESTINO_NOVIOS = ["mjbravo4@uc.cl", "josefinasepulvedaf@gmail.com"]  # <- agrega el correo de tu novia real
 
     # ---------- Correo para los novios ----------
     subject_novios = f"🎁 Nuevo regalo de {nombre}"

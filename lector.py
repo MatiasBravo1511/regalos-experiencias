@@ -1,3 +1,6 @@
+from datetime import datetime, timedelta, timezone
+import pytz
+chile_tz = pytz.timezone("America/Santiago")
 import time
 from app import leer_emails_y_confirmar, confirmar_desde_correo
 

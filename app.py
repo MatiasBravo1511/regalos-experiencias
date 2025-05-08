@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
+import pytz
+chile_tz = pytz.timezone("America/Santiago")
 import re
 import os
 import smtplib
@@ -763,7 +765,7 @@ def confirmar_desde_correo(texto_email):
         print("❌ No se pudo convertir el monto:", monto_str)
         return
 
-    ahora = datetime.now()
+    ahora = datetime.now(chile_tz)
     umbral_tiempo = ahora - timedelta(minutes=5)  # revisar regalos creados hace menos de 5 minutos
 
     print(f"📬 Monto detectado en correo: {monto}")
@@ -840,7 +842,7 @@ def pagar():
         "correo": correo_usuario,
         "experiencias": [item.copy() for item in carrito],
         "mensaje": mensaje,
-        "fecha": datetime.now(),
+        "fecha": datetime.now(chile_tz),
         "confirmado": False
     }
 

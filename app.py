@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session
-from datetime import datetime
+from datetime import datetime, timedelta
+import re
 import os
 import smtplib
 from email.mime.text import MIMEText
@@ -9,7 +10,22 @@ import email
 from email.header import decode_header
 import chardet
 import time
+import json
     
+# Funcion para leer regalos
+def cargar_regalos():
+    global regalos
+    try:
+        with open("regalos.json", "r", encoding="utf-8") as f:
+            regalos_json = json.load(f)
+            regalos = []
+            for r in regalos_json:
+                r["fecha"] = datetime.fromisoformat(r["fecha"])
+                regalos.append(r)
+    except FileNotFoundError:
+        regalos = []
+
+cargar_regalos()
 
 # Configuración de Gmail IMAP
 EMAIL_USER = "maticoteregalos@gmail.com"
@@ -17,6 +33,7 @@ EMAIL_PASS = "qlhx kwrt kwxx pgap"
 IMAP_SERVER = "imap.gmail.com"
 
 def leer_emails_y_confirmar(callback_confirmar):
+    cargar_regalos()
     try:
         mail = imaplib.IMAP4_SSL(IMAP_SERVER)
         mail.login(EMAIL_USER, EMAIL_PASS)
@@ -67,6 +84,9 @@ def leer_emails_y_confirmar(callback_confirmar):
                         print(f"📥 Detectado correo relacionado a pago: {subject}")
                         callback_confirmar(subject + cuerpo)
 
+        for eid in email_ids:
+            mail.store(eid, '+FLAGS', '\\Deleted')
+        mail.expunge()
         mail.logout()
     except Exception as e:
         print("❌ Error al leer correos:", e)
@@ -74,8 +94,6 @@ def leer_emails_y_confirmar(callback_confirmar):
 app = Flask(__name__)
 app.secret_key = os.urandom(24)  # Para mantener la sesión segura
 
-# Simularemos una "base de datos" en memoria para guardar los mensajes
-regalos = []
 experiencias_regaladas = set()
 
 @app.route('/')
@@ -729,9 +747,9 @@ def index():
         exp["regalado"] = exp["nombre"] in experiencias_regaladas
     return render_template("index.html", experiencias=experiencias)
 
-import re
-
 def confirmar_desde_correo(texto_email):
+
+    print(f"🔍 Hay {len(regalos)} regalos en memoria")
     # Buscar patrón del tipo $1.000 o $120000
     match = re.search(r"\$[\d\.]+", texto_email)
     if not match:
@@ -745,46 +763,32 @@ def confirmar_desde_correo(texto_email):
         print("❌ No se pudo convertir el monto:", monto_str)
         return
 
+    ahora = datetime.now()
+    umbral_tiempo = ahora - timedelta(minutes=5)  # revisar regalos creados hace menos de 5 minutos
+
     print(f"📬 Monto detectado en correo: {monto}")
-    
-    print("🎁 Regalos pendientes:")
+    print("🎁 Regalos pendientes recientes:")
+
     for r in regalos:
-        if not r.get("confirmado"):
+        print('Regalos:', r)
+        if not r.get("confirmado") and r["fecha"] >= umbral_tiempo:
             total = sum(exp["precio"] for exp in r["experiencias"])
             print(f"- {r['nombre']}: ${total}")
-            if total == monto:
+            if abs(total - monto) <= 1000:  # tolerancia
                 r["confirmado"] = True
                 for e in r["experiencias"]:
                     experiencias_regaladas.add(e["nombre"])
                 print(f"✅ Confirmado regalo por monto: ${monto:,} de {r['nombre']}")
-
-                # Enviar correo recién ahora
                 enviar_correos_de_agradecimiento(r["nombre"], r["correo"], r["mensaje"], r["experiencias"], total)
+                # Actualizar el archivo regalos.json con el cambio de estado
+                with open("regalos.json", "w", encoding="utf-8") as f:
+                    regalos_guardar = [
+                        {**reg, "fecha": reg["fecha"].isoformat()} for reg in regalos
+                    ]
+                    json.dump(regalos_guardar, f, indent=2, ensure_ascii=False)
                 break
-    else:
-        print(f"⚠️ No se encontró ningún regalo pendiente con ese monto. Monto detectado: ${monto}")
-        print(f"Totales pendientes: {[sum(exp['precio'] for exp in r['experiencias']) for r in regalos if not r.get('confirmado')]}")
-
-
-
-@app.route('/enviar_regalo', methods=["POST"])
-def enviar_regalo():
-    nombre = request.form.get("nombre")
-    mensaje = request.form.get("mensaje")
-    carrito = session.get('carrito', [])
-
-    regalos.append({
-        "nombre": nombre,
-        "experiencias": carrito,
-        "mensaje": mensaje,
-        "fecha": datetime.now(),
-        "confirmado": False
-    })
-
-    session.pop('carrito', None)  # vacía el carrito después de enviar
-
-    return redirect(url_for("gracias"))
-
+        else:
+            print("⚠️ No se encontró ningún regalo reciente pendiente con ese monto.")
 
 @app.route('/agregar', methods=['POST'])
 def agregar_al_carrito():
@@ -806,10 +810,6 @@ def carrito():
     items = session.get('carrito', [])
     total = sum(item['precio'] for item in items)
     return render_template("carrito.html", items=items, total=total)
-
-@app.route('/gracias')
-def gracias():
-    return render_template("gracias.html")
 
 @app.route('/eliminar/<int:indice>', methods=['POST'])
 def eliminar_experiencia(indice):
@@ -845,6 +845,12 @@ def pagar():
     }
 
     regalos.append(regalo)
+    with open("regalos.json", "w", encoding="utf-8") as f:
+        # Convertir datetime a string antes de guardar
+        regalos_guardar = [
+            {**r, "fecha": r["fecha"].isoformat()} for r in regalos
+        ]
+        json.dump(regalos_guardar, f, indent=2, ensure_ascii=False)
     regalo_id = len(regalos) - 1
     session['regalo_actual_id'] = regalo_id
     session['total_a_pagar'] = total
@@ -858,36 +864,6 @@ def verificar_pago():
     if idx is not None and 0 <= idx < len(regalos):
         return {"confirmado": regalos[idx]["confirmado"]}
     return {"confirmado": False}
-
-
-import hashlib
-def generar_firma(params, secret):
-    # No incluir el parámetro 's' en la firma
-    parametros_para_firma = {k: v for k, v in params.items() if k != 's'}
-
-    # Orden alfabético por clave
-    sorted_items = sorted(parametros_para_firma.items())
-
-    # Concatenar como key=value
-    concatenado = '&'.join(f"{k}={v}" for k, v in sorted_items)
-
-    # Agregar secret key al final
-    concatenado += secret
-
-    # Generar firma SHA-256 en hexadecimal
-    return hashlib.sha256(concatenado.encode('utf-8')).hexdigest()
-
-@app.route('/confirmar_pago', methods=['POST'])
-def confirmar_pago():
-    return "OK"
-
-@app.route('/pago_confirmacion')
-def pago_confirmacion():
-    total = session.get('total_a_pagar', 0)
-    idx = session.get('regalo_actual_id')
-    nombre = regalos[idx]["nombre"] if idx is not None and idx < len(regalos) else "Amigo/a"
-    return render_template("pago_confirmacion.html", total=total, nombre=nombre)
-
 
 def enviar_correos_de_agradecimiento(nombre, correo_usuario, mensaje, experiencias, total):
     EMAIL_HOST = "smtp.gmail.com"

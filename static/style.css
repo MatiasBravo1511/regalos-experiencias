@@ -9,7 +9,7 @@ body {
 }
 
 .container {
-    background-color: rgba(221, 230, 208, 0.95);
+    background-color: rgba(221, 230, 208, 0.9);
     margin: 5% auto;
     padding: 40px;
     border-radius: 15px;
@@ -187,4 +187,30 @@ button.eliminar:hover {
 .card.regalado {
     opacity: 0.6;
     filter: grayscale(60%);
+}
+
+@media (max-width: 768px) {
+    .container {
+        max-width: 90%;
+        padding: 20px;
+        margin: 10% auto;
+        background-color: rgba(221, 230, 208, 0.92); /* un poco más transparente */
+    }
+
+    .cards {
+        gap: 15px;
+    }
+
+    .card {
+        width: 48%;
+    }
+
+    .bienvenida img {
+        width: 150px;
+        height: 150px;
+    }
+
+    .texto-bienvenida p {
+        font-size: 15px;
+    }
 }

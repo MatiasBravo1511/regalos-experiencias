@@ -1,0 +1,2 @@
+from app import leer_emails_y_confirmar, confirmar_desde_correo
+leer_emails_y_confirmar(confirmar_desde_correo)

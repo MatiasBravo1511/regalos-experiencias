@@ -193,24 +193,36 @@ button.eliminar:hover {
     .container {
         max-width: 90%;
         padding: 20px;
-        margin: 10% auto;
-        background-color: rgba(221, 230, 208, 0.92); /* un poco más transparente */
+        margin: 20px auto;
+        background-color: rgba(221, 230, 208, 0.85);
     }
 
     .cards {
-        gap: 15px;
+        gap: 12px;
+        justify-content: center;
     }
 
     .card {
-        width: 48%;
+        width: 45%;
+        min-width: unset;
+    }
+
+    .bienvenida {
+        flex-direction: column;
+        text-align: center;
     }
 
     .bienvenida img {
-        width: 150px;
-        height: 150px;
+        width: 140px;
+        height: 140px;
     }
 
     .texto-bienvenida p {
         font-size: 15px;
     }
+
+    h1 {
+        font-size: 24px;
+    }
 }
+

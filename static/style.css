@@ -190,39 +190,56 @@ button.eliminar:hover {
 }
 
 @media (max-width: 768px) {
+    body {
+        background-attachment: scroll;
+    }
+
     .container {
-        max-width: 90%;
-        padding: 20px;
-        margin: 20px auto;
-        background-color: rgba(221, 230, 208, 0.85);
+        max-width: 92%;
+        padding: 15px;
+        margin: 30px auto;
+        background-color: rgba(221, 230, 208, 0.8);  /* más transparente */
+        box-shadow: none;
     }
 
     .cards {
-        gap: 12px;
+        gap: 10px;
         justify-content: center;
     }
 
     .card {
-        width: 45%;
+        width: 46%;
         min-width: unset;
+        padding: 10px;
     }
 
     .bienvenida {
         flex-direction: column;
+        align-items: center;
         text-align: center;
     }
 
     .bienvenida img {
-        width: 140px;
-        height: 140px;
+        width: 120px;
+        height: 120px;
+        margin-bottom: 15px;
     }
 
     .texto-bienvenida p {
-        font-size: 15px;
+        font-size: 14px;
     }
 
     h1 {
-        font-size: 24px;
+        font-size: 22px;
+    }
+
+    button {
+        font-size: 14px;
+        padding: 10px 16px;
+    }
+
+    input, textarea {
+        font-size: 14px;
     }
 }
 

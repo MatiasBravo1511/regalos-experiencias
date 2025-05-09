@@ -195,7 +195,7 @@ button.eliminar:hover {
     }
 
     .container {
-        max-width: 92%;
+        max-width: 70%;
         padding: 15px;
         margin: 30px auto;
         background-color: rgba(221, 230, 208, 0.8);  /* más transparente */

@@ -732,6 +732,42 @@ def index():
             "imagen": "img/kbras.jpg"
         },
         {
+            "nombre": "Sesión de ácido hialurónico con la Doctora Barros",
+            "precio": 70000,
+            "descripcion": "Experta en que la vejéz pase piola.",
+            "imagen": "img/igna.jpg"
+        },
+        {
+            "nombre": "Sesión Tratamiento Invisaling con el doctor Flores",
+            "precio": 70000,
+            "descripcion": "Nuestro dentista influences de la familia.",
+            "imagen": "img/andres.jpg"
+        },
+        {
+            "nombre": "Tarde de quesadillas con Pipe, Isi y Emi",
+            "precio": 70000,
+            "descripcion": "Para compartir una linda tarde escuchando las risas de la Emi.",
+            "imagen": "img/pipe-isi.jpg"
+        },
+        {
+            "nombre": "Asesoría Nutricional con María Ignacia Flores",
+            "precio": 70000,
+            "descripcion": "Hay que bajar los kilos post matrimonio.",
+            "imagen": "img/nacha.jpg"
+        },
+        {
+            "nombre": "Libro de recetas Nutritoti",
+            "precio": 70000,
+            "descripcion": "Se aseguran galletas con chips de chocolates sin grasas, harinas ni azúcares.",
+            "imagen": "img/toti.jpg"
+        },
+        {
+            "nombre": "Tarde con Cami Villaseñor, Luciano y Lari en el bosque",
+            "precio": 50000,
+            "descripcion": "Esperamos las indicaciones de Lu para llevarnos por los mejores senderos.",
+            "imagen": "img/cami-villa.jpg"
+        },
+        {
             "nombre": "Experiencia de prueba",
             "precio": 1000,
             "descripcion": "test.",

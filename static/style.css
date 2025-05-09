@@ -191,15 +191,15 @@ button.eliminar:hover {
 
 @media (max-width: 768px) {
     body {
+        background-image: url('../static/bosque.jpg');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: top center;
         background-attachment: scroll;
     }
 
     .container {
-        max-width: 70%;
-        padding: 15px;
-        margin: 30px auto;
-        background-color: rgba(221, 230, 208, 0.8);  /* más transparente */
-        box-shadow: none;
+        background-color: rgba(255, 255, 255, 0.85); /* más contraste para ver imagen */
     }
 
     .cards {

@@ -103,7 +103,7 @@ def index():
     experiencias = [
         {
             "nombre": "Cena Romántica en Hotel Antumalal",
-            "precio": 80000,
+            "precio": 90000,
             "descripcion": "Comida rica en el hotel de la ceremonia de matrimonio.",
             "imagen": "img/cena-antumalal.jpg"
         },
@@ -133,38 +133,20 @@ def index():
         },
         {
             "nombre": "Viaje de Cicloturismo para dos por el sur de Chile",
-            "precio": 150000,
+            "precio": 170000,
             "descripcion": "Para poder revivir uno de nuestros primeros (y más sufridos) viajes por Chile.",
             "imagen": "img/cicloturismo.jpg"
         },
         {
-            "nombre": "Curso de Carpintería para el Mati",
-            "precio": 50000,
-            "descripcion": "",
-            "imagen": "img/carpinteria.jpg"
-        },
-        {
-            "nombre": "Curso de Jardinería para la Cote",
-            "precio": 50000,
-            "descripcion": "",
-            "imagen": "img/jardineria.jpg"
-        },
-        {
-            "nombre": "Curso de Apicultura",
-            "precio": 100000,
-            "descripcion": "",
-            "imagen": "img/apicultura.jpg"
-        },
-        {
             "nombre": "Curso de Compostaje",
-            "precio": 100000,
-            "descripcion": "",
+            "precio": 80000,
+            "descripcion": "Para hacer compost para nuestras plantitas sureñas.",
             "imagen": "img/compostaje.jpg"
         },
         {
             "nombre": "Invernadero para el bosque",
-            "precio": 80000,
-            "descripcion": "",
+            "precio": 100000,
+            "descripcion": "Para alojar nuestras plantitas sureñas.",
             "imagen": "img/invernadero.jpg"
         },
         {
@@ -200,13 +182,13 @@ def index():
         {
             "nombre": "Meet & Greet con Erlend Øye",
             "precio": 100000,
-            "descripcion": "",
+            "descripcion": "Spoiler: van a escuchar mucho de él en nuestra ceremonia.",
             "imagen": "img/erlend-oye.jpg"
         },
         {
             "nombre": "Concierto privado de Cristóbal Briceño",
             "precio": 80000,
-            "descripcion": "",
+            "descripcion": "Nuestro funado favorito.",
             "imagen": "img/briceño.jpg"
         },
         {
@@ -218,13 +200,13 @@ def index():
         {
             "nombre": "Aeropress",
             "precio": 50000,
-            "descripcion": "",
+            "descripcion": "Ayúdanos a seguir alimentando esta adicción al café.",
             "imagen": "img/aeropress.jpg"
         },
         {
             "nombre": "Saco de café de grano",
             "precio": 50000,
-            "descripcion": "",
+            "descripcion": "El buen café viene desde su origen y tueste.",
             "imagen": "img/cafe.jpg"
         },
         {
@@ -254,7 +236,7 @@ def index():
         {
             "nombre": "Escapada a San Martín de los Andes",
             "precio": 150000,
-            "descripcion": "Para visitar a nuestros queridos hermanos, boludo.",
+            "descripcion": "Para visitar a nuestros queridos hermanos, ché.",
             "imagen": "img/san-martin.jpg"
         },
         {
@@ -272,7 +254,7 @@ def index():
         {
             "nombre": "Camioneta de Leña para el invierno",
             "precio": 100000,
-            "descripcion": "Porque esta helao.",
+            "descripcion": "Esta helao.",
             "imagen": "img/leña.jpg"
         },
         {
@@ -288,14 +270,14 @@ def index():
             "imagen": "img/mantencion-bicicletas.jpg"
         },
         {
-            "nombre": "Noche de camping en El Cerduo",
+            "nombre": "Noche de camping en El Cerdúo",
             "precio": 100000,
             "descripcion": "Nuestro lugar de compromiso. Una excelente forma de celebrar el aniversario.",
             "imagen": "img/el-cerduo.jpg"
         },
         {
             "nombre": "Revivir primera cita - Cicletada a San José de Maipo",
-            "precio": 30000,
+            "precio": 40000,
             "descripcion": "Con los deliciosos sandwich de pimentón de la Cote.",
             "imagen": "img/primera-cita.jpg"
         },
@@ -326,7 +308,7 @@ def index():
         {
             "nombre": "Sesion de tatuaje para los novios",
             "precio": 50000,
-            "descripcion": "",
+            "descripcion": "Prometemos que los tatuajes no serán en la cara.",
             "imagen": "img/tatoo.jpg"
         },
         {
@@ -349,7 +331,7 @@ def index():
         },
         {
             "nombre": "Entrada a parque de Hello Kitty en Japón",
-            "precio": 40000,
+            "precio": 50000,
             "descripcion": "Para nuestra luna de miel.",
             "imagen": "img/hello-kitty.jpg"
         },
@@ -362,14 +344,14 @@ def index():
         {
             "nombre": "Cena de sushi en Tokio",
             "precio": 100000,
-            "descripcion": "",
+            "descripcion": "Para subir la vara del Uber Eats.",
             "imagen": "img/sushi-tokio.jpg"
         },
         {
             "nombre": "Crucero a la Antártica",
             "precio": 200000,
             "descripcion": "El sueño del Mati.",
-            "imagen": "img/antartica-cruise.jpg"
+            "imagen": "img/antartica-cruise.JPG"
         },
         {
             "nombre": "300 hilos de bordado D.M.C.",
@@ -392,7 +374,7 @@ def index():
         {
             "nombre": "Curso de Cerámica Gres",
             "precio": 60000,
-            "descripcion": "Necesitamos hobbies en el sur",
+            "descripcion": "Necesitamos hobbies en el sur.",
             "imagen": "img/ceramica.jpg"
         },
         {
@@ -404,13 +386,13 @@ def index():
         {
             "nombre": "Curso de Elaboración de Cerveza",
             "precio": 50000,
-            "descripcion": "Mejor excusa para invitarlos a tomar un Shop en la casa bosque.",
+            "descripcion": "Mejor excusa para invitarlos a tomar un shop en la casa bosque.",
             "imagen": "img/cerveza.jpg"
         },
         {
             "nombre": "Entrada a Stand-up de Paloma Salas",
             "precio": 30000,
-            "descripcion": "Siempre es bueno reirse.",
+            "descripcion": "Icónico Camilo Marihuahua.",
             "imagen": "img/paloma-salas.jpg"
         },
         {
@@ -421,19 +403,19 @@ def index():
         },
         {
             "nombre": "Cafecito con Pedro Pascal",
-            "precio": 30000,
+            "precio": 40000,
             "descripcion": "El sueño de tod@s.",
             "imagen": "img/pedro-pascal.jpg"
         },
         {
             "nombre": "Tren desde Barcelona a Roma",
-            "precio": 50000,
+            "precio": 80000,
             "descripcion": "Para nuestro próximo viaje.",
             "imagen": "img/barcelona-roma.jpeg"
         },
         {
             "nombre": "Un día visitando ropa usada",
-            "precio": 20000,
+            "precio": 30000,
             "descripcion": "Para tener más conciencia amigx.",
             "imagen": "img/ropa-usada.jpg"
         },
@@ -457,7 +439,7 @@ def index():
         },
         {
             "nombre": "Encendido rápido de la bosca",
-            "precio": 20000,
+            "precio": 30000,
             "descripcion": "Los gatos lo piden.",
             "imagen": "img/bosca.jpg"
         },
@@ -469,33 +451,33 @@ def index():
         },
         {
             "nombre": "Clases de pesca con Aldo Bravo (con resultados asegurados)",
-            "precio": 100000,
+            "precio": 150000,
             "descripcion": "Basta de promesas incumplidas.",
             "imagen": "img/aldo-bravo.jpg"
         },
         {
             "nombre": "Curso de cocina sin gluten dictado por Jacqueline Yáñez",
             "precio": 100000,
-            "descripcion": "Puro talento por acá.",
-            "imagen": "img/test.jpg"
+            "descripcion": "Aprenderemos a comer sin hincharnos.",
+            "imagen": "img/sin-gluten.jpg"
         },
         {
             "nombre": "Clases de boxeo dictadas por Reinaldo Yáñez",
-            "precio": 100000,
+            "precio": 80000,
             "descripcion": "El abuelo del novio tuvo su época de Rocky Balboa.",
             "imagen": "img/boxeo.jpg"
         },
         {
             "nombre": "Experiencia de bordado con Eliana Valdés",
-            "precio": 50000,
+            "precio": 80000,
             "descripcion": "La abuela del novio posee mucho talento en el área.",
             "imagen": "img/clases-bordado.jpg"
         },
         {
             "nombre": "Viaje para que Martín Bravo traiga el anillo de compromiso",
             "precio": 100000,
-            "descripcion": "El testigo del matrimonio viajó por mar y tierra para hacer esto posible.",
-            "imagen": "img/test.jpg"
+            "descripcion": "El testigo del matrimonio y hermano del novio viajó por mar y tierra para hacer esto posible.",
+            "imagen": "img/martin-londres.jpg"
         },
         {
             "nombre": "Clase de automaquillaje con Carolina Flores",
@@ -510,9 +492,15 @@ def index():
             "imagen": "img/cocteleria.jpg"
         },
         {
+            "nombre": "Curso de Jardinería con Jabu y Dani Villaseñor",
+            "precio": 60000,
+            "descripcion": "Expertas en los beneficios naturales.",
+            "imagen": "img/jardineria.jpg"
+        },
+        {
             "nombre": "Experiencia turística lacustre por Alejandra Flores",
             "precio": 100000,
-            "descripcion": "La mamá de la novia es la mejor guía turística.",
+            "descripcion": "La mamá de la novia se sabe todas las papitas.",
             "imagen": "img/ale-flores.jpg"
         },
         {
@@ -541,7 +529,7 @@ def index():
         },
         {
             "nombre": "Salir y comer con Rodri y Lucy en Praga",
-            "precio": 100000,
+            "precio": 80000,
             "descripcion": "Nuestros checos favoritos.",
             "imagen": "img/rodri-lucy.jpg"
         },
@@ -559,7 +547,7 @@ def index():
         },
         {
             "nombre": "Carrot cake de la Tey",
-            "precio": 40000,
+            "precio": 60000,
             "descripcion": "El favorito del novio.",
             "imagen": "img/carrot-cake.jpg"
         },
@@ -571,7 +559,7 @@ def index():
         },
         {
             "nombre": "Asado en Marbella con Bri y Pia",
-            "precio": 80000,
+            "precio": 70000,
             "descripcion": "La mejor malaya de la zona.",
             "imagen": "img/bri-pia.jpg"
         },
@@ -601,19 +589,19 @@ def index():
         },
         {
             "nombre": "Ida a bailar con Diego y Mari",
-            "precio": 100000,
+            "precio": 50000,
             "descripcion": "Esta pareja explosiva se saca los prohibidos.",
             "imagen": "img/diego-mari.jpg"
         },
         {
             "nombre": "Experiencia de kayak con Maximiliano Hebel",
-            "precio": 100000,
+            "precio": 70000,
             "descripcion": "El mejor guía de la región de Los Lagos.",
             "imagen": "img/max.jpg"
         },
         {
             "nombre": "Clases de ajedrez con Benjamín Rizzardini",
-            "precio": 100000,
+            "precio": 70000,
             "descripcion": "Dicen que ni Anya Taylor-Joy puede contra este maestro.",
             "imagen": "img/benja.jpg"
         },
@@ -630,20 +618,20 @@ def index():
             "imagen": "img/carla.jpg"
         },
         {
-            "nombre": "Asadito en Reñaca con Toto y Dayan",
-            "precio": 80000,
+            "nombre": "Asadito en Reñaca con Toto y Diane",
+            "precio": 100000,
             "descripcion": "Los mejores asados de la región costera central.",
             "imagen": "img/toto.jpg"
         },
         {
             "nombre": "Día de shopping con Vivi Flores",
-            "precio": 70000,
+            "precio": 100000,
             "descripcion": "Panorama muy entretenido para cualquier día.",
             "imagen": "img/vivi.jpg"
         },
         {
             "nombre": "Degustación de cerveza CCU junto a Mati y Gabi",
-            "precio": 80000,
+            "precio": 100000,
             "descripcion": "Expertos en fermentación de cebada.",
             "imagen": "img/mati-gabi.jpg"
         },
@@ -655,19 +643,19 @@ def index():
         },
         {
             "nombre": "Membresía anual Alto del Carmen con Bruno Lapi",
-            "precio": 100000,
+            "precio": 70000,
             "descripcion": "El hombre sabe lo que es bueno en calidad y cantidad.",
             "imagen": "img/bruno.jpg"
         },
         {
             "nombre": "Clase de biodanza con Víctor Gomez",
-            "precio": 50000,
+            "precio": 70000,
             "descripcion": "Directo desde Ñuñoa.",
             "imagen": "img/biodanza.jpg"
         },
         {
             "nombre": "Entrenamiento personalizado con Graci y Andrés",
-            "precio": 100000,
+            "precio": 80000,
             "descripcion": "Expertos en el deporte y la educación.",
             "imagen": "img/graci-andres.jpg"
         },
@@ -679,15 +667,21 @@ def index():
         },
         {
             "nombre": "Asesoría legal con Javiera Ilabaca",
-            "precio": 100000,
+            "precio": 50000,
             "descripcion": "Primera opción cuando se trata de defendernos.",
             "imagen": "img/jaji.jpg"
         },
         {
             "nombre": "Clases de carpintería dictadas por Sven Kroneberg",
-            "precio": 50000,
+            "precio": 100000,
             "descripcion": "Para fabricar nuestros propios muebles y botes.",
             "imagen": "img/sven.jpg"
+        },
+        {
+            "nombre": "Curso de Apicultura con Vero González",
+            "precio": 100000,
+            "descripcion": "Para aprender a hacer la mejor miel del sur.",
+            "imagen": "img/apicultura.jpg"
         },
         {
             "nombre": "Tocata impartida por Caces",
@@ -715,14 +709,14 @@ def index():
         },
         {
             "nombre": "Lectura de carta astral por Rodrigo Sepúlveda",
-            "precio": 30000,
-            "descripcion": "Mejor que Pedrito Engel.",
+            "precio": 35000,
+            "descripcion": "El papá de la novia es mejor que Pedrito Engel.",
             "imagen": "img/rodrigo-astral.jpg"
         },
         {
             "nombre": "Visita guiada a viña con Alejandra Flores",
             "precio": 80000,
-            "descripcion": "Los mejores consejos para encontrar un gran vino de 6 mil pesos.",
+            "descripcion": "Los mejores consejos para encontrar un gran vino de 6 mil pesos en el supermercado.",
             "imagen": "img/ale-viña.jpg"
         },
         {

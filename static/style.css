@@ -1,12 +1,10 @@
 body {
     margin: 0;
     font-family: 'Georgia', serif;
-    background-image: url('../static/bosque.jpg');
+    background-image: url('../static/bosque.jpg'); /* asegúrate de tener la imagen en /static */
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: scroll; /* evita parpadeo y pixelado en móvil */
-    image-rendering: auto; /* usa interpolación nativa */
+    background-attachment: fixed;
     color: #2C2C2C;
 }
 
@@ -242,6 +240,14 @@ button.eliminar:hover {
 
     input, textarea {
         font-size: 14px;
+    }
+}
+
+@media 
+  only screen and (-webkit-min-device-pixel-ratio: 2), 
+  only screen and (min-resolution: 192dpi) {
+    body {
+        background-size: 100% auto;
     }
 }
 

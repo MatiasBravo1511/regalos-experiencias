@@ -773,7 +773,8 @@ def confirmar_desde_correo(texto_email):
 
     for r in regalos:
         print('Regalos:', r)
-        if not r.get("confirmado") and r["fecha"] >= umbral_tiempo:
+        # if not r.get("confirmado") and r["fecha"] >= umbral_tiempo:
+        if not r.get("confirmado"):    
             total = sum(exp["precio"] for exp in r["experiencias"])
             print(f"- {r['nombre']}: ${total}")
             if abs(total - monto) <= 1000:  # tolerancia

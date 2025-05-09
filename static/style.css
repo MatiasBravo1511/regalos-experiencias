@@ -192,9 +192,9 @@ button.eliminar:hover {
 @media (max-width: 768px) {
     body {
         background-image: url('../static/bosque.jpg');
-        background-size: contain;
+        background-size: cover;
         background-repeat: no-repeat;
-        background-position: top center;
+        background-position: center center;
         background-attachment: scroll;
     }
 

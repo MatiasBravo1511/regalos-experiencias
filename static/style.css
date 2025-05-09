@@ -123,11 +123,19 @@ button:hover {
 /* Sección de bienvenida */
 .bienvenida {
     display: flex;
-    flex-wrap: wrap;
-    gap: 30px;
+    flex-direction: column;
     align-items: center;
+    text-align: center;
+    gap: 30px;
     margin-bottom: 40px;
 }
+/* .bienvenida { */
+    /* display: flex; */
+    /* flex-wrap: wrap; */
+    /* gap: 30px; */
+    /* align-items: center; */
+    /* margin-bottom: 40px; */
+/* } */
 
 .bienvenida img {
     width: 200px;

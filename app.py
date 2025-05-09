@@ -100,6 +100,15 @@ experiencias_regaladas = set()
 
 @app.route('/')
 def index():
+    cargar_regalos()  # 🔄 lee el archivo .json cada vez que se entra
+
+    # Obtener nombres de experiencias ya confirmadas
+    experiencias_confirmadas = {
+        exp["nombre"]
+        for r in regalos if r.get("confirmado")
+        for exp in r["experiencias"]
+    }
+    
     experiencias = [
         {
             "nombre": "Cena Romántica en Hotel Antumalal",
@@ -781,8 +790,10 @@ def index():
         },
         
     ]
+    
     for exp in experiencias:
-        exp["regalado"] = exp["nombre"] in experiencias_regaladas
+        exp["regalado"] = exp["nombre"] in experiencias_confirmadas
+
     return render_template("index.html", experiencias=experiencias)
 
 def confirmar_desde_correo(texto_email):

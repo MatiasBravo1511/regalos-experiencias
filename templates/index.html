@@ -34,7 +34,7 @@
         <label>Selecciona una o más experiencias:</label>
 		<div class="cards">
 			{% for exp in experiencias %}
-			<div class="card {% if exp.regalado %}regalado{% endif %}">
+			<div class="card ">
 				<img src="{{ url_for('static', filename=exp.imagen) }}" alt="{{ exp.nombre }}">
 				<div class="card-content">
 					<h3>{{ exp.nombre }}</h3>

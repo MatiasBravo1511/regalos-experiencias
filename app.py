@@ -663,6 +663,24 @@ def index():
             "imagen": "img/biodanza.jpg"
         },
         {
+            "nombre": "Clase de batería con Juan Cristobal Garretón",
+            "precio": 70000,
+            "descripcion": "El maestro del hi hat directo desde Valdivia.",
+            "imagen": "img/bateria.jpg"
+        },
+        {
+            "nombre": "Expedición en bicicleta con Gisela Quiroz",
+            "precio": 70000,
+            "descripcion": "Tiene todas las papitas de las buenas rutas.",
+            "imagen": "img/bici-exp.jpg"
+        },
+        {
+            "nombre": "Expedición de trail runing con Javiera Valderrama",
+            "precio": 70000,
+            "descripcion": "Vamos a intentar mantenerle el ritmo.",
+            "imagen": "img/trail.jpg"
+        },
+        {
             "nombre": "Entrenamiento personalizado con Graci y Andrés",
             "precio": 80000,
             "descripcion": "Expertos en el deporte y la educación.",
@@ -695,7 +713,7 @@ def index():
         {
             "nombre": "Tocata impartida por Caces",
             "precio": 50000,
-            "descripcion": "Porque el hombre pinta, escribe poesía, guitarrea, canta y toca guitarra.",
+            "descripcion": "El hombre de los mil y un talentos.",
             "imagen": "img/caces.jpg"
         },
         {

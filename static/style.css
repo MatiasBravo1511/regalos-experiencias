@@ -1,10 +1,12 @@
 body {
     margin: 0;
     font-family: 'Georgia', serif;
-    background-image: url('../static/bosque.jpg'); /* asegúrate de tener la imagen en /static */
+    background-image: url('../static/bosque.jpg');
     background-size: cover;
     background-position: center;
-    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-attachment: scroll; /* evita parpadeo y pixelado en móvil */
+    image-rendering: auto; /* usa interpolación nativa */
     color: #2C2C2C;
 }
 

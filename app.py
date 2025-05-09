@@ -392,7 +392,7 @@ def index():
         {
             "nombre": "Entrada a Stand-up de Paloma Salas",
             "precio": 30000,
-            "descripcion": "Icónico Camilo Marihuahua.",
+            "descripcion": "Icónico Camilo Mariguagua.",
             "imagen": "img/paloma-salas.jpg"
         },
         {
@@ -766,6 +766,12 @@ def index():
             "precio": 50000,
             "descripcion": "Esperamos las indicaciones de Lu para llevarnos por los mejores senderos.",
             "imagen": "img/cami-villa.jpg"
+        },
+        {
+            "nombre": "Coaching laboral con Cata y Coti",
+            "precio": 100000,
+            "descripcion": "Nuestras expertas en clima y cultura organizacional.",
+            "imagen": "img/cata-coti.jpg"
         },
         {
             "nombre": "Experiencia de prueba",

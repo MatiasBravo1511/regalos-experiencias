@@ -1,3 +1,9 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
 body {
     margin: 0;
     font-family: 'Georgia', serif;
@@ -190,9 +196,11 @@ button.eliminar:hover {
 }
 
 @media (max-width: 768px) {
-	html, body {
-        height: 100%;
+    html, body {
+        min-height: 100vh;
+        height: auto;
     }
+
     body {
         background-image: url('../static/bosque.jpg');
         background-size: cover;
@@ -202,19 +210,13 @@ button.eliminar:hover {
     }
 
     .container {
-        background-color: rgba(255, 255, 255, 0.8); /* más contraste para ver imagen */
-		max-width: 70%;
-        padding: 15px;
+        background-color: rgba(255, 255, 255, 0.85);
+        max-width: 90%;
+        padding: 20px;
         margin: 30px auto;
-		box-shadow: none;
-    }
-.container {
-        max-width: 70%;
-        padding: 15px;
-        margin: 30px auto;
-        background-color: rgba(221, 230, 208, 0.8);  /* más transparente */
         box-shadow: none;
     }
+
     .cards {
         gap: 10px;
         justify-content: center;
@@ -255,6 +257,7 @@ button.eliminar:hover {
         font-size: 14px;
     }
 }
+
 
 @media 
   only screen and (-webkit-min-device-pixel-ratio: 2), 

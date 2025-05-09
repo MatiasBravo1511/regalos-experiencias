@@ -732,7 +732,7 @@ def index():
             "imagen": "img/kbras.jpg"
         },
         {
-            "nombre": "Sesión de ácido hialurónico con la Doctora Barros",
+            "nombre": "Sesión de ácido hialurónico con la Doctora Barrios",
             "precio": 70000,
             "descripcion": "Experta en que la vejéz pase piola.",
             "imagen": "img/igna.jpg"
@@ -740,7 +740,7 @@ def index():
         {
             "nombre": "Sesión Tratamiento Invisaling con el doctor Flores",
             "precio": 70000,
-            "descripcion": "Nuestro dentista influences de la familia.",
+            "descripcion": "Nuestro dentista influencer de la familia.",
             "imagen": "img/andres.jpg"
         },
         {

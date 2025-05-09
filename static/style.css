@@ -267,3 +267,32 @@ button.eliminar:hover {
     }
 }
 
+@media (max-width: 768px) {
+    body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-image: url('../static/bosque.jpg');
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+        z-index: -1;
+    }
+
+    body {
+        background: none !important;
+    }
+
+    .container {
+        background-color: rgba(255, 255, 255, 0.85);
+        max-width: 90%;
+        padding: 20px;
+        margin: 30px auto;
+        box-shadow: none;
+        position: relative;
+        z-index: 1;
+    }
+}

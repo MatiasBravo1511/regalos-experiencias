@@ -77,12 +77,12 @@ def leer_emails_y_confirmar(callback_confirmar):
                             encoding = resultado["encoding"] or "latin-1"
                             cuerpo = raw_bytes.decode(encoding, errors="replace")
 
-                    print("📨 Asunto:", subject, flush=True)
-                    print("🧾 Cuerpo:", cuerpo[:300], flush=True)  # muestra los primeros 300 caracteres
+                    print("📨 Asunto:", subject)
+                    print("🧾 Cuerpo:", cuerpo[:300])  # muestra los primeros 300 caracteres
 
                     # FILTRO: si contiene "Slach" o un nombre conocido
                     if "slach" in subject.lower() or "slach" in cuerpo.lower():
-                        print(f"📥 Detectado correo relacionado a pago: {subject}", flush=True)
+                        print(f"📥 Detectado correo relacionado a pago: {subject}")
                         callback_confirmar(subject + cuerpo)
 
         for eid in email_ids:
@@ -90,7 +90,7 @@ def leer_emails_y_confirmar(callback_confirmar):
         mail.expunge()
         mail.logout()
     except Exception as e:
-        print("❌ Error al leer correos:", e, flush=True)
+        print("❌ Error al leer correos:", e)
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)  # Para mantener la sesión segura
@@ -815,36 +815,36 @@ def index():
 
 def confirmar_desde_correo(texto_email):
     cargar_regalos()
-    print(f"🔍 Hay {len(regalos)} regalos en memoria", flush=True)
+    print(f"🔍 Hay {len(regalos)} regalos en memoria")
     # Buscar patrón del tipo $1.000 o $120000
     match = re.search(r"\$[\d\.]+", texto_email)
     if not match:
-        print("❌ No se encontró monto en el correo", flush=True)
+        print("❌ No se encontró monto en el correo")
         return
 
     monto_str = match.group(0).replace("$", "").replace(".", "")
     try:
         monto = int(monto_str)
     except ValueError:
-        print("❌ No se pudo convertir el monto:", monto_str, flush=True)
+        print("❌ No se pudo convertir el monto:", monto_str)
         return
 
     ahora = datetime.now()
     umbral_tiempo = ahora - timedelta(minutes=5)  # revisar regalos creados hace menos de 5 minutos
 
-    print(f"📬 Monto detectado en correo: {monto}", flush=True)
-    print("🎁 Regalos pendientes recientes:", flush=True)
+    print(f"📬 Monto detectado en correo: {monto}")
+    print("🎁 Regalos pendientes recientes:")
 
     for r in regalos:
         # if not r.get("confirmado") and r["fecha"] >= umbral_tiempo:
         if not r.get("confirmado"):    
             total = sum(exp["precio"] for exp in r["experiencias"])
-            print(f"- {r['nombre']}: ${total}", flush=True)
+            print(f"- {r['nombre']}: ${total}")
             if abs(total - monto) <= 1000:  # tolerancia
                 r["confirmado"] = True
                 for e in r["experiencias"]:
                     experiencias_regaladas.add(e["nombre"])
-                print(f"✅ Confirmado regalo por monto: ${monto:,} de {r['nombre']}", flush=True)
+                print(f"✅ Confirmado regalo por monto: ${monto:,} de {r['nombre']}")
                 enviar_correos_de_agradecimiento(r["nombre"], r["correo"], r["mensaje"], r["experiencias"], total)
                 # Actualizar el archivo regalos.json con el cambio de estado
                 with open("regalos.json", "w", encoding="utf-8") as f:
@@ -854,7 +854,7 @@ def confirmar_desde_correo(texto_email):
                     json.dump(regalos_guardar, f, indent=2, ensure_ascii=False)
                 break
         else:
-            print("⚠️ No se encontró ningún regalo reciente pendiente con ese monto.", flush=True)
+            print("⚠️ No se encontró ningún regalo reciente pendiente con ese monto.")
 
 @app.route('/agregar', methods=['POST'])
 def agregar_al_carrito():
@@ -994,7 +994,7 @@ Mati & Cote 💕
             img.add_header('Content-ID', '<graciasimg>')
             msg_user.attach(img)
     except Exception as e:
-        print("No se pudo adjuntar imagen:", e, flush=True)
+        print("No se pudo adjuntar imagen:", e)
 
     # ---------- Enviar ambos correos ----------
     try:
@@ -1005,24 +1005,10 @@ Mati & Cote 💕
             server.sendmail(EMAIL_USER, correo, msg_novios.as_string())
         server.sendmail(EMAIL_USER, correo_usuario, msg_user.as_string())
         server.quit()
-        print("📬 Correos enviados con éxito.", flush=True)
+        print("📬 Correos enviados con éxito.")
     except Exception as e:
-        print("❌ Error al enviar correos:", e, flush=True)
+        print("❌ Error al enviar correos:", e)
 
 
 if __name__ == '__main__':
-    import threading
-
-    def iniciar_lector_correos():
-        def bucle_verificacion():
-            while True:
-                for _ in range(15):  # intenta durante 5 minutos (15*20s)
-                    leer_emails_y_confirmar(confirmar_desde_correo)
-                    time.sleep(20)
-
-        hilo = threading.Thread(target=bucle_verificacion, daemon=True)
-        hilo.start()
-
-    # Iniciar el lector de correos antes de arrancar Flask
-    iniciar_lector_correos()
     app.run(debug=True)

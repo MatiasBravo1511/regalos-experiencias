@@ -3,6 +3,6 @@ import time
 
 while True:
     cargar_regalos()
-    print("⏳ Revisando correos...", flush=True)
+    print("⏳ Revisando correos...")
     leer_emails_y_confirmar(confirmar_desde_correo)
     time.sleep(10)  # cada 10 segundos

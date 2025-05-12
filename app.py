@@ -13,6 +13,11 @@ from email.header import decode_header
 import chardet
 import time
 import json
+ 
+# Para guardar mensajes en el log
+def log_mensaje(msg):
+    with open("log_lector.txt", "a", encoding="utf-8") as f:
+        f.write(f"{datetime.now()}: {msg}\n")
     
 # Funcion para leer regalos
 def cargar_regalos():
@@ -79,11 +84,14 @@ def leer_emails_y_confirmar(callback_confirmar):
                             cuerpo = raw_bytes.decode(encoding, errors="replace")
 
                     print("📨 Asunto:", subject)
+                    log_mensaje("📨 Asunto:", subject)
                     print("🧾 Cuerpo:", cuerpo[:300])  # muestra los primeros 300 caracteres
+                    log_mensaje("🧾 Cuerpo:", cuerpo[:300])
 
                     # FILTRO: si contiene "Slach" o un nombre conocido
                     if "slach" in subject.lower() or "slach" in cuerpo.lower():
                         print(f"📥 Detectado correo relacionado a pago: {subject}")
+                        log_mensaje(f"📥 Detectado correo relacionado a pago: {subject}")
                         callback_confirmar(subject + cuerpo)
 
         for eid in email_ids:
@@ -834,19 +842,22 @@ def confirmar_desde_correo(texto_email):
     umbral_tiempo = ahora - timedelta(minutes=5)  # revisar regalos creados hace menos de 5 minutos
 
     print(f"📬 Monto detectado en correo: {monto}")
+    log_mensaje(f"📬 Monto detectado en correo: {monto}")
     print("🎁 Regalos pendientes recientes:")
+    log_mensaje("🎁 Regalos pendientes recientes:")
 
     for r in regalos:
-        print('Regalos:', r)
         # if not r.get("confirmado") and r["fecha"] >= umbral_tiempo:
         if not r.get("confirmado"):    
             total = sum(exp["precio"] for exp in r["experiencias"])
             print(f"- {r['nombre']}: ${total}")
+            log_mensaje(f"- {r['nombre']}: ${total}")
             if abs(total - monto) <= 1000:  # tolerancia
                 r["confirmado"] = True
                 for e in r["experiencias"]:
                     experiencias_regaladas.add(e["nombre"])
                 print(f"✅ Confirmado regalo por monto: ${monto:,} de {r['nombre']}")
+                log_mensaje(f"✅ Confirmado regalo por monto: ${monto:,} de {r['nombre']}")
                 enviar_correos_de_agradecimiento(r["nombre"], r["correo"], r["mensaje"], r["experiencias"], total)
                 # Actualizar el archivo regalos.json con el cambio de estado
                 with open("regalos.json", "w", encoding="utf-8") as f:
@@ -857,6 +868,7 @@ def confirmar_desde_correo(texto_email):
                 break
         else:
             print("⚠️ No se encontró ningún regalo reciente pendiente con ese monto.")
+            log_mensaje("⚠️ No se encontró ningún regalo reciente pendiente con ese monto.")
 
 @app.route('/agregar', methods=['POST'])
 def agregar_al_carrito():

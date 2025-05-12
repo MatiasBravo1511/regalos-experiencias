@@ -1,4 +1,5 @@
 from app import leer_emails_y_confirmar, confirmar_desde_correo
+import time
 
 while True:
     print("⏳ Revisando correos...", flush=True)

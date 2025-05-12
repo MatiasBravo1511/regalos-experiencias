@@ -1,7 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from datetime import datetime, timedelta, timezone
-import pytz
-chile_tz = pytz.timezone("America/Santiago")
 import re
 import os
 import smtplib
@@ -14,10 +12,6 @@ import chardet
 import time
 import json
  
-# Para guardar mensajes en el log
-def log_mensaje(msg):
-    with open("log_lector.txt", "a", encoding="utf-8") as f:
-        f.write(f"{datetime.now()}: {msg}\n")
     
 # Funcion para leer regalos
 def cargar_regalos():
@@ -83,15 +77,12 @@ def leer_emails_y_confirmar(callback_confirmar):
                             encoding = resultado["encoding"] or "latin-1"
                             cuerpo = raw_bytes.decode(encoding, errors="replace")
 
-                    print("📨 Asunto:", subject)
-                    log_mensaje("📨 Asunto:", subject)
-                    print("🧾 Cuerpo:", cuerpo[:300])  # muestra los primeros 300 caracteres
-                    log_mensaje("🧾 Cuerpo:", cuerpo[:300])
+                    print("📨 Asunto:", subject, flush=True)
+                    print("🧾 Cuerpo:", cuerpo[:300], flush=True)  # muestra los primeros 300 caracteres
 
                     # FILTRO: si contiene "Slach" o un nombre conocido
                     if "slach" in subject.lower() or "slach" in cuerpo.lower():
-                        print(f"📥 Detectado correo relacionado a pago: {subject}")
-                        log_mensaje(f"📥 Detectado correo relacionado a pago: {subject}")
+                        print(f"📥 Detectado correo relacionado a pago: {subject}", flush=True)
                         callback_confirmar(subject + cuerpo)
 
         for eid in email_ids:
@@ -99,7 +90,7 @@ def leer_emails_y_confirmar(callback_confirmar):
         mail.expunge()
         mail.logout()
     except Exception as e:
-        print("❌ Error al leer correos:", e)
+        print("❌ Error al leer correos:", e, flush=True)
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)  # Para mantener la sesión segura
@@ -824,40 +815,36 @@ def index():
 
 def confirmar_desde_correo(texto_email):
 
-    print(f"🔍 Hay {len(regalos)} regalos en memoria")
+    print(f"🔍 Hay {len(regalos)} regalos en memoria", flush=True)
     # Buscar patrón del tipo $1.000 o $120000
     match = re.search(r"\$[\d\.]+", texto_email)
     if not match:
-        print("❌ No se encontró monto en el correo")
+        print("❌ No se encontró monto en el correo", flush=True)
         return
 
     monto_str = match.group(0).replace("$", "").replace(".", "")
     try:
         monto = int(monto_str)
     except ValueError:
-        print("❌ No se pudo convertir el monto:", monto_str)
+        print("❌ No se pudo convertir el monto:", monto_str, flush=True)
         return
 
     ahora = datetime.now(chile_tz)
     umbral_tiempo = ahora - timedelta(minutes=5)  # revisar regalos creados hace menos de 5 minutos
 
-    print(f"📬 Monto detectado en correo: {monto}")
-    log_mensaje(f"📬 Monto detectado en correo: {monto}")
-    print("🎁 Regalos pendientes recientes:")
-    log_mensaje("🎁 Regalos pendientes recientes:")
+    print(f"📬 Monto detectado en correo: {monto}", flush=True)
+    print("🎁 Regalos pendientes recientes:", flush=True)
 
     for r in regalos:
         # if not r.get("confirmado") and r["fecha"] >= umbral_tiempo:
         if not r.get("confirmado"):    
             total = sum(exp["precio"] for exp in r["experiencias"])
-            print(f"- {r['nombre']}: ${total}")
-            log_mensaje(f"- {r['nombre']}: ${total}")
+            print(f"- {r['nombre']}: ${total}", flush=True)
             if abs(total - monto) <= 1000:  # tolerancia
                 r["confirmado"] = True
                 for e in r["experiencias"]:
                     experiencias_regaladas.add(e["nombre"])
-                print(f"✅ Confirmado regalo por monto: ${monto:,} de {r['nombre']}")
-                log_mensaje(f"✅ Confirmado regalo por monto: ${monto:,} de {r['nombre']}")
+                print(f"✅ Confirmado regalo por monto: ${monto:,} de {r['nombre']}", flush=True)
                 enviar_correos_de_agradecimiento(r["nombre"], r["correo"], r["mensaje"], r["experiencias"], total)
                 # Actualizar el archivo regalos.json con el cambio de estado
                 with open("regalos.json", "w", encoding="utf-8") as f:
@@ -867,8 +854,7 @@ def confirmar_desde_correo(texto_email):
                     json.dump(regalos_guardar, f, indent=2, ensure_ascii=False)
                 break
         else:
-            print("⚠️ No se encontró ningún regalo reciente pendiente con ese monto.")
-            log_mensaje("⚠️ No se encontró ningún regalo reciente pendiente con ese monto.")
+            print("⚠️ No se encontró ningún regalo reciente pendiente con ese monto.", flush=True)
 
 @app.route('/agregar', methods=['POST'])
 def agregar_al_carrito():
@@ -1008,7 +994,7 @@ Mati & Cote 💕
             img.add_header('Content-ID', '<graciasimg>')
             msg_user.attach(img)
     except Exception as e:
-        print("No se pudo adjuntar imagen:", e)
+        print("No se pudo adjuntar imagen:", e, flush=True)
 
     # ---------- Enviar ambos correos ----------
     try:
@@ -1019,9 +1005,9 @@ Mati & Cote 💕
             server.sendmail(EMAIL_USER, correo, msg_novios.as_string())
         server.sendmail(EMAIL_USER, correo_usuario, msg_user.as_string())
         server.quit()
-        print("📬 Correos enviados con éxito.")
+        print("📬 Correos enviados con éxito.", flush=True)
     except Exception as e:
-        print("❌ Error al enviar correos:", e)
+        print("❌ Error al enviar correos:", e, flush=True)
 
 
 if __name__ == '__main__':

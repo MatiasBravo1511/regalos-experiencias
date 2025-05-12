@@ -814,7 +814,7 @@ def index():
     return render_template("index.html", experiencias=experiencias)
 
 def confirmar_desde_correo(texto_email):
-
+    cargar_regalos()
     print(f"🔍 Hay {len(regalos)} regalos en memoria", flush=True)
     # Buscar patrón del tipo $1.000 o $120000
     match = re.search(r"\$[\d\.]+", texto_email)

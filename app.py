@@ -829,7 +829,7 @@ def confirmar_desde_correo(texto_email):
         print("❌ No se pudo convertir el monto:", monto_str, flush=True)
         return
 
-    ahora = datetime.now(chile_tz)
+    ahora = datetime.now()
     umbral_tiempo = ahora - timedelta(minutes=5)  # revisar regalos creados hace menos de 5 minutos
 
     print(f"📬 Monto detectado en correo: {monto}", flush=True)
@@ -906,7 +906,7 @@ def pagar():
         "correo": correo_usuario,
         "experiencias": [item.copy() for item in carrito],
         "mensaje": mensaje,
-        "fecha": datetime.now(chile_tz),
+        "fecha": datetime.now(),
         "confirmado": False
     }
 

@@ -1,4 +1,4 @@
-from app import leer_emails_y_confirmar, confirmar_desde_correo, cargar_regalos
+from app import leer_emails_y_confirmar, confirmar_desde_correo
 import time
 import logging
 import sys
@@ -29,7 +29,6 @@ sys.stdout = StreamToLogger(logging.getLogger("STDOUT"), logging.INFO)
 sys.stderr = StreamToLogger(logging.getLogger("STDERR"), logging.ERROR)
 
 while True:
-    cargar_regalos()
     print("⏳ Revisando correos...", flush=True)
     leer_emails_y_confirmar(confirmar_desde_correo)
     time.sleep(10)  # cada 10 segundos

@@ -13,11 +13,13 @@ import time
 import json
  
     
-# Funcion para leer regalos
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+REGALOS_PATH = os.path.join(BASE_DIR, "regalos.json")
+
 def cargar_regalos():
     global regalos
     try:
-        with open("regalos.json", "r", encoding="utf-8") as f:
+        with open(REGALOS_PATH, "r", encoding="utf-8") as f:
             regalos_json = json.load(f)
             regalos = []
             for r in regalos_json:
@@ -847,7 +849,7 @@ def confirmar_desde_correo(texto_email):
                 print(f"✅ Confirmado regalo por monto: ${monto:,} de {r['nombre']}", flush=True)
                 enviar_correos_de_agradecimiento(r["nombre"], r["correo"], r["mensaje"], r["experiencias"], total)
                 # Actualizar el archivo regalos.json con el cambio de estado
-                with open("regalos.json", "w", encoding="utf-8") as f:
+                with open(REGALOS_PATH, "w", encoding="utf-8") as f:
                     regalos_guardar = [
                         {**reg, "fecha": reg["fecha"].isoformat()} for reg in regalos
                     ]
@@ -911,7 +913,7 @@ def pagar():
     }
 
     regalos.append(regalo)
-    with open("regalos.json", "w", encoding="utf-8") as f:
+    with open(REGALOS_PATH, "w", encoding="utf-8") as f:
         # Convertir datetime a string antes de guardar
         regalos_guardar = [
             {**r, "fecha": r["fecha"].isoformat()} for r in regalos

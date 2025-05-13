@@ -44,5 +44,7 @@ while True:
             if file_age_days > 3:
                 os.remove(log_file)
                 print("🧹 Log antiguo eliminado", flush=True)
+            else:
+                print("Log reciente, se mantiene", flush=True)
     except Exception as e:
         print(f"⚠️ Error eliminando log: {e}", flush=True)

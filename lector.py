@@ -2,6 +2,8 @@ from app import leer_emails_y_confirmar, confirmar_desde_correo
 import time
 import logging
 import sys
+import os
+import datetime
 
 # Configura el logging para guardar en un archivo llamado "lector.log"
 logging.basicConfig(

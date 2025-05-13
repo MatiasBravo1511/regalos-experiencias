@@ -550,7 +550,7 @@ def index():
             "imagen": "img/tom.jpg"
         },
         {
-            "nombre": "30 litros de pisco sour de Carol Dunfort",
+            "nombre": "30 litros de pisco sour de Carol Dunford",
             "precio": 60000,
             "descripcion": "Sabemos que es el mejor del mundo.",
             "imagen": "img/carol.jpg"
@@ -562,7 +562,7 @@ def index():
             "imagen": "img/carrot-cake.jpg"
         },
         {
-            "nombre": "Concicerto privado con Cata Martinez y Nacho Manhs",
+            "nombre": "Concierto privado con Cata Martinez y Nacho Manhs",
             "precio": 70000,
             "descripcion": "Un honor escuchar a la pareja de amigos más talentosos que tenemos.",
             "imagen": "img/cata-nacho.jpg"

@@ -3,24 +3,27 @@ import time
 import logging
 import sys
 
-import logging
-from logging.handlers import TimedRotatingFileHandler
-import os
+# Configura el logging para guardar en un archivo llamado "lector.log"
+logging.basicConfig(
+    filename="lector.log",
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s",
+    encoding="utf-8"
+)
 
-log_dir = os.path.dirname(os.path.abspath(__file__))
-log_path = os.path.join(log_dir, "lector.log")
+# Redirección de stdout y stderr a logging
+class StreamToLogger:
+    def __init__(self, logger, level):
+        self.logger = logger
+        self.level = level
+        self.linebuf = ''
 
-logger = logging.getLogger()
-logger.setLevel(logging.INFO)
+    def write(self, buf):
+        for line in buf.rstrip().splitlines():
+            self.logger.log(self.level, line.rstrip())
 
-# 🔁 Rotación diaria del log, mantener 3 backups
-handler = TimedRotatingFileHandler(log_path, when="midnight", interval=1, backupCount=3, encoding="utf-8")
-formatter = logging.Formatter('%(asctime)s [%(levelname)s] %(message)s')
-handler.setFormatter(formatter)
-
-# Evita duplicar handlers si recargas el script
-if not logger.handlers:
-    logger.addHandler(handler)
+    def flush(self):
+        pass
 
 sys.stdout = StreamToLogger(logging.getLogger("STDOUT"), logging.INFO)
 sys.stderr = StreamToLogger(logging.getLogger("STDERR"), logging.ERROR)
@@ -29,3 +32,15 @@ while True:
     print("⏳ Revisando correos...", flush=True)
     leer_emails_y_confirmar(confirmar_desde_correo)
     time.sleep(10)  # cada 10 segundos
+    
+    # Eliminar si el archivo tiene más de 3 días
+    try:
+        log_file = "lector.log"
+        if os.path.exists(log_file):
+            modified_time = os.path.getmtime(log_file)
+            file_age_days = (datetime.datetime.now() - datetime.datetime.fromtimestamp(modified_time)).days
+            if file_age_days > 3:
+                os.remove(log_file)
+                print("🧹 Log antiguo eliminado", flush=True)
+    except Exception as e:
+        print(f"⚠️ Error eliminando log: {e}", flush=True)

@@ -598,12 +598,6 @@ def index():
             "imagen": "img/diego.jpg"
         },
         {
-            "nombre": "Ida a bailar con Diego y Mari",
-            "precio": 50000,
-            "descripcion": "Esta pareja explosiva se saca los prohibidos.",
-            "imagen": "img/diego-mari.jpg"
-        },
-        {
             "nombre": "Experiencia de kayak con Maximiliano Hebel",
             "precio": 70000,
             "descripcion": "El mejor guía de la región de Los Lagos.",
@@ -801,13 +795,6 @@ def index():
             "descripcion": "Nuestras expertas en clima y cultura organizacional.",
             "imagen": "img/cata-coti.jpg"
         },
-        {
-            "nombre": "Experiencia de prueba",
-            "precio": 1000,
-            "descripcion": "test.",
-            "imagen": "img/test.jpg"
-        },
-        
     ]
     
     for exp in experiencias:
